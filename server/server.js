@@ -12,7 +12,7 @@ const port= 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.post('/todos', (req, res, next) => {
+app.post('/todos', (req, res) => {
     var todo= new Todo({
       text: req.body.text
     });
@@ -23,6 +23,8 @@ app.post('/todos', (req, res, next) => {
     })
 });
 
+
+module.exports = {app};
 
 
 
