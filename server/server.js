@@ -65,6 +65,33 @@ app.delete('/todos/:id', (req, res) => {
   })
 });
 
+app.patch('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  var body = {
+    text:req.body.text,
+    completed:req.body.completed,
+    completedAt:req.body.completedAt
+  }
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+  if (body.completed===true) {
+    body.completedAt = new Date().getTime();
+  }else{
+    body.completed=false;
+    body.completedAt=null;
+  }
+  Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo)=>{
+    if (!todo) {
+      return res.status(404).send();
+    }
+    res.send({todo});
+  }).catch((e)=>{
+    res.status(400).send();
+  })
+});
+
 app.listen(port, () => {
   console.log(`Server Starts on ${port}`);
 });
