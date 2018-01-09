@@ -23,15 +23,9 @@ app.post('/todos', (req, res) => {
     })
 });
 
-
-module.exports = {app};
-
-
-
-
-
-
-
 app.listen(port, () => {
   console.log(`Server Starts on ${port}`);
 });
+
+
+module.exports = {app};
