@@ -11,14 +11,16 @@ const todos = [{
   text: "First test todo"
 }, {
   _id: new ObjectID(),
-  text: "Second test todo"
-}]
+  text: "Second test todo",
+  completed: true,
+  caompletedAt: 333
+}];
 
 
-beforeEach((done)=>{
+beforeEach(function(done){
   Todo.remove({}).then(()=>{
     return Todo.insertMany(todos);
-  }).then(()=>done());
+  }).then(() => done());
 });
 
 describe("POST / todos", ()=>{
