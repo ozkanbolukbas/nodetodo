@@ -95,6 +95,7 @@ app.patch('/todos/:id', (req, res) => {
   })
 });
 
+//POST users
 app.post('/users', (req, res, next) => {
   var email = req.body.email;
   var password = req.body.password;
@@ -111,6 +112,20 @@ app.post('/users', (req, res, next) => {
   })
 });
 
+//POST /user/login {email, password}
+app.post('/users/login', (req, res, next) => {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  User.findByCredentials(email, password).then((user)=>{
+      return User.generateAuthToken().then((token)=>{
+      res.header("x-auth", token).redirect("/users/me");
+    });
+    res.send(user);
+  }).catch((e)=>{
+    res.status(400).send();
+  })
+});
 
 
 app.get('/users/me', authenticate, (req, res, next) => {
